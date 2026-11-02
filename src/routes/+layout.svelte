@@ -9,6 +9,7 @@
   } from "@urql/svelte";
   import type { LayoutProps } from "./$types";
   import { page } from "$app/state";
+  import Toaster from "#lib/components/Toaster/Toaster.svelte";
 
   setContextClient(
     new Client({
@@ -52,5 +53,6 @@
 </header>
 
 <main class="mx-auto max-w-6xl px-4 py-6">
+  <Toaster />
   {@render children()}
 </main>

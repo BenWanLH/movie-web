@@ -6,7 +6,11 @@
   import EmptyState from "#lib/components/EmptyState/EmptyState.svelte";
   import ErrorState from "#lib/components/ErrorState/ErrorState.svelte";
 
-  const movies = queryStore({ client: getContextClient(), query: MoviesQuery });
+  const movies = queryStore({
+    client: getContextClient(),
+    query: MoviesQuery,
+    context: { additionalTypenames: ["Movie"] },
+  });
 </script>
 
 <svelte:head><title>Movies · MovieDB</title></svelte:head>

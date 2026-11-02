@@ -12,3 +12,12 @@ export const MoviesQuery = graphql(`
     movies { ...MovieCardFields }
   }
 `);
+
+
+export const CreateMovieMutation = graphql(`
+  mutation CreateMovie($movieDetail: MovieDetail!) {
+    createMovie(movieDetail: $movieDetail) {
+      id
+    }
+  }
+`);
