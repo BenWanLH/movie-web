@@ -1,7 +1,14 @@
 import { graphql } from './generated/index.ts';
 
+
+export const MovieCardFields = graphql(`
+  fragment MovieCardFields on Movie {
+    id title releaseYear genres artworkUrl
+  }
+`);
+
 export const MoviesQuery = graphql(`
   query Movies {
-    movies { id title releaseYear }
+    movies { ...MovieCardFields }
   }
 `);

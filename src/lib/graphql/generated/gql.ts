@@ -14,10 +14,12 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
-    "\n  query Movies {\n    movies { id title releaseYear }\n  }\n": typeof types.MoviesDocument,
+    "\n  fragment MovieCardFields on Movie {\n    id title releaseYear genres artworkUrl\n  }\n": typeof types.MovieCardFieldsFragmentDoc,
+    "\n  query Movies {\n    movies { ...MovieCardFields }\n  }\n": typeof types.MoviesDocument,
 };
 const documents: Documents = {
-    "\n  query Movies {\n    movies { id title releaseYear }\n  }\n": types.MoviesDocument,
+    "\n  fragment MovieCardFields on Movie {\n    id title releaseYear genres artworkUrl\n  }\n": types.MovieCardFieldsFragmentDoc,
+    "\n  query Movies {\n    movies { ...MovieCardFields }\n  }\n": types.MoviesDocument,
 };
 
 /**
@@ -37,7 +39,11 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query Movies {\n    movies { id title releaseYear }\n  }\n"): (typeof documents)["\n  query Movies {\n    movies { id title releaseYear }\n  }\n"];
+export function graphql(source: "\n  fragment MovieCardFields on Movie {\n    id title releaseYear genres artworkUrl\n  }\n"): (typeof documents)["\n  fragment MovieCardFields on Movie {\n    id title releaseYear genres artworkUrl\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query Movies {\n    movies { ...MovieCardFields }\n  }\n"): (typeof documents)["\n  query Movies {\n    movies { ...MovieCardFields }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};
