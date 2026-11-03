@@ -14,6 +14,8 @@
     const result = await client.mutation(CreateMovieMutation, { movieDetail });
     if (result.error) throw result.error;
     toast.success(`${movieDetail.title} has been added`);
-    await goto("/movies", { replaceState: true });
+    await goto(`/movies/${result.data?.createMovie.id}`, {
+      replaceState: true,
+    });
   }}
 />

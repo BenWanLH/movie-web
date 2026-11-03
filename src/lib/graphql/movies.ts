@@ -35,3 +35,11 @@ export const DeleteMovieMutation = graphql(`
     deleteMovie(id: $id)
   }
 `);
+
+export const UpdateMovieMutation = graphql(`
+  mutation UpdateMovie($id: ID!, $movieDetail: MovieDetail!) {
+    updateMovie(id: $id, movieDetail: $movieDetail) {
+      id
+    }
+  }
+`);

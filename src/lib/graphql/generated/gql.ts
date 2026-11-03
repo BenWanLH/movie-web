@@ -16,16 +16,18 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
 type Documents = {
     "\n  fragment MovieCardFields on Movie {\n    id title releaseYear genres artworkUrl\n  }\n": typeof types.MovieCardFieldsFragmentDoc,
     "\n  query Movies {\n    movies { ...MovieCardFields }\n  }\n": typeof types.MoviesDocument,
-    "\n  mutation CreateMovie($movieDetail: MovieDetail!) {\n    createMovie(movieDetail: $movieDetail) {\n      id\n    }\n  }\n": typeof types.CreateMovieDocument,
     "\n  query Movie($id: ID!) {\n    movie(id: $id) {\n      id title synopsis releaseYear runtimeMinutes genres artworkUrl\n      credits { id role characterName person { id name } }\n    }\n  }\n": typeof types.MovieDocument,
+    "\n  mutation CreateMovie($movieDetail: MovieDetail!) {\n    createMovie(movieDetail: $movieDetail) {\n      id\n    }\n  }\n": typeof types.CreateMovieDocument,
     "\n  mutation DeleteMovie($id: ID!) {\n    deleteMovie(id: $id)\n  }\n": typeof types.DeleteMovieDocument,
+    "\n  mutation UpdateMovie($id: ID!, $movieDetail: MovieDetail!) {\n    updateMovie(id: $id, movieDetail: $movieDetail) {\n      id\n    }\n  }\n": typeof types.UpdateMovieDocument,
 };
 const documents: Documents = {
     "\n  fragment MovieCardFields on Movie {\n    id title releaseYear genres artworkUrl\n  }\n": types.MovieCardFieldsFragmentDoc,
     "\n  query Movies {\n    movies { ...MovieCardFields }\n  }\n": types.MoviesDocument,
-    "\n  mutation CreateMovie($movieDetail: MovieDetail!) {\n    createMovie(movieDetail: $movieDetail) {\n      id\n    }\n  }\n": types.CreateMovieDocument,
     "\n  query Movie($id: ID!) {\n    movie(id: $id) {\n      id title synopsis releaseYear runtimeMinutes genres artworkUrl\n      credits { id role characterName person { id name } }\n    }\n  }\n": types.MovieDocument,
+    "\n  mutation CreateMovie($movieDetail: MovieDetail!) {\n    createMovie(movieDetail: $movieDetail) {\n      id\n    }\n  }\n": types.CreateMovieDocument,
     "\n  mutation DeleteMovie($id: ID!) {\n    deleteMovie(id: $id)\n  }\n": types.DeleteMovieDocument,
+    "\n  mutation UpdateMovie($id: ID!, $movieDetail: MovieDetail!) {\n    updateMovie(id: $id, movieDetail: $movieDetail) {\n      id\n    }\n  }\n": types.UpdateMovieDocument,
 };
 
 /**
@@ -53,15 +55,19 @@ export function graphql(source: "\n  query Movies {\n    movies { ...MovieCardFi
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  mutation CreateMovie($movieDetail: MovieDetail!) {\n    createMovie(movieDetail: $movieDetail) {\n      id\n    }\n  }\n"): (typeof documents)["\n  mutation CreateMovie($movieDetail: MovieDetail!) {\n    createMovie(movieDetail: $movieDetail) {\n      id\n    }\n  }\n"];
-/**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
 export function graphql(source: "\n  query Movie($id: ID!) {\n    movie(id: $id) {\n      id title synopsis releaseYear runtimeMinutes genres artworkUrl\n      credits { id role characterName person { id name } }\n    }\n  }\n"): (typeof documents)["\n  query Movie($id: ID!) {\n    movie(id: $id) {\n      id title synopsis releaseYear runtimeMinutes genres artworkUrl\n      credits { id role characterName person { id name } }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
+export function graphql(source: "\n  mutation CreateMovie($movieDetail: MovieDetail!) {\n    createMovie(movieDetail: $movieDetail) {\n      id\n    }\n  }\n"): (typeof documents)["\n  mutation CreateMovie($movieDetail: MovieDetail!) {\n    createMovie(movieDetail: $movieDetail) {\n      id\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
 export function graphql(source: "\n  mutation DeleteMovie($id: ID!) {\n    deleteMovie(id: $id)\n  }\n"): (typeof documents)["\n  mutation DeleteMovie($id: ID!) {\n    deleteMovie(id: $id)\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation UpdateMovie($id: ID!, $movieDetail: MovieDetail!) {\n    updateMovie(id: $id, movieDetail: $movieDetail) {\n      id\n    }\n  }\n"): (typeof documents)["\n  mutation UpdateMovie($id: ID!, $movieDetail: MovieDetail!) {\n    updateMovie(id: $id, movieDetail: $movieDetail) {\n      id\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

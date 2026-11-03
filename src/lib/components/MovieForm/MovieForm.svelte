@@ -3,11 +3,11 @@
   import { GENRE_LABELS } from "#lib/model/genre.ts";
 
   let {
-    initial,
+    movieDetail,
     submitLabel = "Save",
     onSubmit,
   }: {
-    initial?: MovieDetail;
+    movieDetail?: MovieDetail;
     submitLabel?: string;
     onSubmit: (detail: MovieDetail) => Promise<void>;
   } = $props();
@@ -15,15 +15,17 @@
   const genreOptions = Object.entries(GENRE_LABELS) as [Genre, string][];
 
   // svelte-ignore state_referenced_locally
-  let title = $state(initial?.title ?? "");
+  let title = $state(movieDetail?.title ?? "");
   // svelte-ignore state_referenced_locally
-  let synopsis = $state(initial?.synopsis ?? "");
+  let synopsis = $state(movieDetail?.synopsis ?? "");
   // svelte-ignore state_referenced_locally
-  let releaseYear = $state<number | null>(initial?.releaseYear ?? null);
+  let releaseYear = $state<number | null>(movieDetail?.releaseYear ?? null);
   // svelte-ignore state_referenced_locally
-  let runtimeMinutes = $state<number | null>(initial?.runtimeMinutes ?? null);
+  let runtimeMinutes = $state<number | null>(
+    movieDetail?.runtimeMinutes ?? null,
+  );
   // svelte-ignore state_referenced_locally
-  let genres = $state<Genre[]>(initial?.genres ?? []);
+  let genres = $state<Genre[]>(movieDetail?.genres ?? []);
 
   let submitted = $state(false);
   let submitting = $state(false);
