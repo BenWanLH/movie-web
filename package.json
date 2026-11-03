@@ -39,6 +39,7 @@
   "dependencies": {
     "@urql/core": "^6.0.3",
     "@urql/svelte": "^5.0.0",
+    "axios": "^1.21.0",
     "graphql": "^17.0.2"
   }
 }

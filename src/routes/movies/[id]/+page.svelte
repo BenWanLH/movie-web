@@ -6,6 +6,7 @@
   import { GENRE_LABELS } from "#lib/model/genre.ts";
   import ConfirmDialog from "#lib/components/ConfirmDialog/ConfirmDialog.svelte";
   import { getMovieContext } from "./movie-context";
+  import ArtworkUpload from "#lib/components/ArtworkUpload/ArtworkUpload.svelte";
 
   let shouldDisplayDeleteDialog = $state(false);
   let deleting = $state(false);
@@ -24,22 +25,15 @@
   >← Back to movies</a
 >
 <article class="md:flex md:gap-8">
-  <div
-    class="aspect-[2/3] w-full max-w-xs shrink-0 overflow-hidden rounded-lg bg-gray-100 shadow-sm"
-  >
-    {#if ctx.movie.artworkUrl}
-      <img
-        src={ctx.movie.artworkUrl}
-        alt="{ctx.movie.title} poster"
-        class="h-full w-full object-cover"
-      />
-    {:else}
-      <div
-        class="flex h-full items-center justify-center text-6xl text-gray-300"
-      >
-        🎬
-      </div>
-    {/if}
+  <div class="w-full max-w-xs shrink-0">
+    <ArtworkUpload
+      movieId={ctx.movie.id}
+      currentUrl={ctx.movie.artworkUrl}
+      onUploaded={() => {
+        ctx.refetch();
+        toast.success("Artwork updated");
+      }}
+    />
   </div>
 
   <div class="mt-6 flex-1 md:mt-0">

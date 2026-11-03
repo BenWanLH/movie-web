@@ -9,6 +9,7 @@
   const movies = queryStore({
     client: getContextClient(),
     query: MoviesQuery,
+    requestPolicy: "cache-and-network",
     context: { additionalTypenames: ["Movie"] },
   });
 </script>
