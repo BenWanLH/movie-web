@@ -13,11 +13,25 @@ export const MoviesQuery = graphql(`
   }
 `);
 
+export const MovieQuery = graphql(`
+  query Movie($id: ID!) {
+    movie(id: $id) {
+      id title synopsis releaseYear runtimeMinutes genres artworkUrl
+      credits { id role characterName person { id name } }
+    }
+  }
+`);
 
 export const CreateMovieMutation = graphql(`
   mutation CreateMovie($movieDetail: MovieDetail!) {
     createMovie(movieDetail: $movieDetail) {
       id
     }
+  }
+`);
+
+export const DeleteMovieMutation = graphql(`
+  mutation DeleteMovie($id: ID!) {
+    deleteMovie(id: $id)
   }
 `);
