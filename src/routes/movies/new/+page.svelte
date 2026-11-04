@@ -8,8 +8,16 @@
   const client = getContextClient();
 </script>
 
+<svelte:head><title>Add Movie · MovieDB</title></svelte:head>
+
+<a
+  href={`/movies`}
+  class="mb-4 inline-block text-sm text-gray-500 hover:text-gray-900">← Back</a
+>
+
+<h1 class="mb-6 text-2xl font-semibold">Add Movie</h1>
 <MovieForm
-  submitLabel="Create movie"
+  submitLabel="Add movie"
   onSubmit={async (movieDetail) => {
     const result = await client.mutation(CreateMovieMutation, { movieDetail });
     if (result.error) throw result.error;

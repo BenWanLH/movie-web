@@ -7,6 +7,7 @@
   import { toast } from "#lib/state/toast/toast.svelte.ts";
   import { goto } from "$app/navigation";
   import ErrorState from "#lib/components/ErrorState/ErrorState.svelte";
+
   let { params, children }: LayoutProps = $props();
 
   let redirecting = false;
