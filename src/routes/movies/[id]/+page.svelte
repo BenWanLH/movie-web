@@ -1,18 +1,40 @@
 <script lang="ts">
-  import { DeleteMovieMutation, MovieQuery } from "#lib/graphql/movies.ts";
-  import { getContextClient, queryStore } from "@urql/svelte";
+  import {
+    DeleteMovieMutation,
+    DeleteCreditMutation,
+  } from "#lib/graphql/movies.ts";
+  import { getContextClient } from "@urql/svelte";
   import { toast } from "#lib/state/toast/toast.svelte.ts";
   import { goto } from "$app/navigation";
   import { GENRE_LABELS } from "#lib/model/genre.ts";
   import ConfirmDialog from "#lib/components/ConfirmDialog/ConfirmDialog.svelte";
   import { getMovieContext } from "./movie-context";
   import ArtworkUpload from "#lib/components/ArtworkUpload/ArtworkUpload.svelte";
+  import AddCreditForm from "#lib/components/AddCreditForm/AddCreditForm.svelte";
+  import { ROLE_LABELS } from "#lib/model/role.ts";
 
   let shouldDisplayDeleteDialog = $state(false);
   let deleting = $state(false);
-  let client = getContextClient();
+  let removingId = $state<string | null>(null);
+  const client = getContextClient();
 
   const ctx = getMovieContext();
+
+  async function removeCredit(creditId: string, name: string) {
+    removingId = creditId;
+    const result = await client.mutation(
+      DeleteCreditMutation,
+      { id: creditId },
+      { additionalTypenames: ["Credit"] },
+    );
+    removingId = null;
+
+    if (result.error) {
+      toast.error(`Could not remove ${name}. Please try again.`);
+      return;
+    }
+    toast.success(`${name} removed from cast & crew`);
+  }
 </script>
 
 <svelte:head>
@@ -94,13 +116,30 @@
                     as {credit.characterName}</span
                   >{/if}
               </span>
-              <span class="text-gray-500">{credit.role}</span>
+              <span class="flex items-center gap-3">
+                <span class="text-gray-500">{ROLE_LABELS[credit.role]}</span>
+                <button
+                  type="button"
+                  onclick={() =>
+                    removeCredit(
+                      credit.id,
+                      credit.person?.name ?? "Unknown person",
+                    )}
+                  disabled={removingId === credit.id}
+                  aria-label="Remove {credit.person?.name ??
+                    'unknown person'} ({ROLE_LABELS[credit.role]})"
+                  class="rounded p-1 text-gray-400 hover:bg-red-50 hover:text-red-600 disabled:opacity-50"
+                >
+                  {removingId === credit.id ? "…" : "✕"}
+                </button>
+              </span>
             </li>
           {/each}
         </ul>
       {:else}
         <p class="mt-2 text-sm text-gray-500">No credits yet.</p>
       {/if}
+      <AddCreditForm movieId={ctx.movie.id} />
     </section>
   </div>
 </article>

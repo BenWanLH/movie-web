@@ -14,7 +14,12 @@
   const client = getContextClient();
 
   const movieQuery = $derived(
-    queryStore({ client, query: MovieQuery, variables: { id: params.id } }),
+    queryStore({
+      client,
+      query: MovieQuery,
+      variables: { id: params.id },
+      context: { additionalTypenames: ["Credit"] },
+    }),
   );
 
   setMovieContext({

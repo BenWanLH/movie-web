@@ -17,7 +17,7 @@ export const MovieQuery = graphql(`
   query Movie($id: ID!) {
     movie(id: $id) {
       id title synopsis releaseYear runtimeMinutes genres artworkUrl
-      credits { id role characterName person { id name } }
+      credits { id role characterName person { id name roles} }
     }
   }
 `);
@@ -42,4 +42,18 @@ export const UpdateMovieMutation = graphql(`
       id
     }
   }
+`);
+
+export const AddCreditMutation = graphql(`
+  mutation AddCredit($creditDetail: CreditDetail!) {
+    addCredit(creditDetail: $creditDetail) {
+      id
+    }
+  }  
+`);
+
+export const DeleteCreditMutation = graphql(`
+  mutation DeleteCredit($id: ID!) {
+    deleteCredit(id: $id)
+  }  
 `);
