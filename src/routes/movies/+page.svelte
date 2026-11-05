@@ -5,13 +5,25 @@
   import MovieCard from "#lib/components/MovieCard/MovieCard.svelte";
   import EmptyState from "#lib/components/EmptyState/EmptyState.svelte";
   import ErrorState from "#lib/components/ErrorState/ErrorState.svelte";
+  import SearchInput from "#lib/components/SearchInput/SearchInput.svelte";
 
-  const movies = queryStore({
-    client: getContextClient(),
-    query: MoviesQuery,
-    requestPolicy: "cache-and-network",
-    context: { additionalTypenames: ["Movie"] },
-  });
+  let title = $state("");
+
+  const emptyTitle = $derived(
+    title ? `No movie title matches "${title}"` : "No movies yet",
+  );
+
+  const client = getContextClient();
+
+  const movies = $derived(
+    queryStore({
+      client,
+      query: MoviesQuery,
+      variables: { title },
+      requestPolicy: "cache-and-network",
+      context: { additionalTypenames: ["Movie"] },
+    }),
+  );
 </script>
 
 <svelte:head><title>Movies · MovieDB</title></svelte:head>
@@ -24,6 +36,13 @@
   >
     Add movie
   </a>
+</div>
+<div class="mb-6">
+  <SearchInput
+    value={title}
+    onSearch={(term) => (title = term)}
+    loading={$movies.fetching}
+  />
 </div>
 
 {#if $movies.fetching}
@@ -40,7 +59,7 @@
     onRetry={() => movies.reexecute({ requestPolicy: "network-only" })}
   />
 {:else if $movies.data?.movies.length === 0}
-  <EmptyState title="No movies yet">
+  <EmptyState title={emptyTitle}>
     <a
       class="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
       href="/movies/new"

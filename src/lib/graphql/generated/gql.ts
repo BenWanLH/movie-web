@@ -15,7 +15,7 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
  */
 type Documents = {
     "\n  fragment MovieCardFields on Movie {\n    id title releaseYear genres artworkUrl\n  }\n": typeof types.MovieCardFieldsFragmentDoc,
-    "\n  query Movies {\n    movies { ...MovieCardFields }\n  }\n": typeof types.MoviesDocument,
+    "\n  query Movies($title: String) {\n    movies(title: $title) { ...MovieCardFields }\n  }\n": typeof types.MoviesDocument,
     "\n  query Movie($id: ID!) {\n    movie(id: $id) {\n      id title synopsis releaseYear runtimeMinutes genres artworkUrl\n      credits { id role characterName person { id name roles} }\n    }\n  }\n": typeof types.MovieDocument,
     "\n  mutation CreateMovie($movieDetail: MovieDetail!) {\n    createMovie(movieDetail: $movieDetail) {\n      id\n    }\n  }\n": typeof types.CreateMovieDocument,
     "\n  mutation DeleteMovie($id: ID!) {\n    deleteMovie(id: $id)\n  }\n": typeof types.DeleteMovieDocument,
@@ -31,7 +31,7 @@ type Documents = {
 };
 const documents: Documents = {
     "\n  fragment MovieCardFields on Movie {\n    id title releaseYear genres artworkUrl\n  }\n": types.MovieCardFieldsFragmentDoc,
-    "\n  query Movies {\n    movies { ...MovieCardFields }\n  }\n": types.MoviesDocument,
+    "\n  query Movies($title: String) {\n    movies(title: $title) { ...MovieCardFields }\n  }\n": types.MoviesDocument,
     "\n  query Movie($id: ID!) {\n    movie(id: $id) {\n      id title synopsis releaseYear runtimeMinutes genres artworkUrl\n      credits { id role characterName person { id name roles} }\n    }\n  }\n": types.MovieDocument,
     "\n  mutation CreateMovie($movieDetail: MovieDetail!) {\n    createMovie(movieDetail: $movieDetail) {\n      id\n    }\n  }\n": types.CreateMovieDocument,
     "\n  mutation DeleteMovie($id: ID!) {\n    deleteMovie(id: $id)\n  }\n": types.DeleteMovieDocument,
@@ -67,7 +67,7 @@ export function graphql(source: "\n  fragment MovieCardFields on Movie {\n    id
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query Movies {\n    movies { ...MovieCardFields }\n  }\n"): (typeof documents)["\n  query Movies {\n    movies { ...MovieCardFields }\n  }\n"];
+export function graphql(source: "\n  query Movies($title: String) {\n    movies(title: $title) { ...MovieCardFields }\n  }\n"): (typeof documents)["\n  query Movies($title: String) {\n    movies(title: $title) { ...MovieCardFields }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

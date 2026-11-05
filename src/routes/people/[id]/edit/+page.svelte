@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { untrack } from "svelte";
   import { getContextClient, queryStore } from "@urql/svelte";
   import { toast } from "#lib/state/toast/toast.svelte.ts";
   import { goto } from "$app/navigation";
@@ -8,10 +9,9 @@
     UpdatePersonMutation,
   } from "#lib/graphql/people.ts";
   import ConfirmDialog from "#lib/components/ConfirmDialog/ConfirmDialog.svelte";
-  import { untrack } from "svelte";
   import PersonForm from "#lib/components/PersonForm/PersonForm.svelte";
-  import type { PageProps } from "./$types";
   import ErrorState from "#lib/components/ErrorState/ErrorState.svelte";
+  import type { PageProps } from "./$types";
 
   let { params }: PageProps = $props();
 

@@ -8,8 +8,8 @@ export const MovieCardFields = graphql(`
 `);
 
 export const MoviesQuery = graphql(`
-  query Movies {
-    movies { ...MovieCardFields }
+  query Movies($title: String) {
+    movies(title: $title) { ...MovieCardFields }
   }
 `);
 

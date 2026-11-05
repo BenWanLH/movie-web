@@ -1,26 +1,36 @@
 <script lang="ts">
   import EmptyState from "#lib/components/EmptyState/EmptyState.svelte";
   import ErrorState from "#lib/components/ErrorState/ErrorState.svelte";
-  import Loader from "#lib/components/Loader/Loader.svelte";
   import PersonCard from "#lib/components/PersonCard/PersonCard.svelte";
+  import SearchInput from "#lib/components/SearchInput/SearchInput.svelte";
   import type { Role } from "#lib/graphql/generated/graphql.ts";
   import { PeopleQuery } from "#lib/graphql/people.ts";
   import { isRole, ROLE_LABELS } from "#lib/model/role.ts";
   import { page } from "$app/state";
   import { getContextClient, queryStore } from "@urql/svelte";
 
+  const client = getContextClient();
+
   const role = $derived.by(() => {
     const value = page.url.searchParams.get("role");
     return isRole(value) ? value : null;
   });
 
-  const client = getContextClient();
+  let name = $state("");
+
+  const emptyTitle = $derived(
+    name
+      ? `No movie personel name matches "${name}"`
+      : role
+        ? `No ${ROLE_LABELS[role].toLowerCase()}s yet`
+        : "No movie personnel yet",
+  );
 
   const peopleQuery = $derived(
     queryStore({
       client,
       query: PeopleQuery,
-      variables: { roles: role ? [role] : undefined },
+      variables: { roles: role ? [role] : undefined, name },
       requestPolicy: "cache-and-network",
       context: { additionalTypenames: ["Person"] },
     }),
@@ -46,6 +56,14 @@
     class="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
     >Add person</a
   >
+</div>
+
+<div class="mt-6">
+  <SearchInput
+    value={name}
+    onSearch={(term) => (name = term)}
+    loading={$peopleQuery.fetching}
+  />
 </div>
 
 <nav aria-label="Filter by role" class="mt-6 mb-6 flex gap-2 overflow-x-auto">
@@ -84,7 +102,7 @@
     onRetry={() => peopleQuery.reexecute({ requestPolicy: "network-only" })}
   />
 {:else if $peopleQuery.data?.people.length === 0}
-  <EmptyState title="No movie personnel yet!">
+  <EmptyState title={emptyTitle}>
     <a
       class="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
       href="/people/new"
