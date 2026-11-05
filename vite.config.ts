@@ -24,7 +24,7 @@ export default defineConfig({
 	],
 	server: {
 		proxy: {
-			'/graphql': 'http://localhost:8080',
+			'/graphql': 'http://localhost:4000',
 			'^/movies/\\d+/artwork': 'http://localhost:8080',
 		}
 	},

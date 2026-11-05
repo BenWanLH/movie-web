@@ -1,7 +1,7 @@
 import type { CodegenConfig } from '@graphql-codegen/cli';
 
 const config: CodegenConfig = {
-  schema: 'http://localhost:8080/graphql',           // introspects the running movie-service
+  schema: 'http://localhost:4000/graphql',           // introspects the running movie-service
   documents: ['src/lib/graphql/**/*.ts', '!src/lib/graphql/generated/**'],
   generates: {
     'src/lib/graphql/generated/': {
