@@ -99,6 +99,9 @@
       bind:value={bio}
       maxlength="2000"
       class="mt-1 block w-full rounded-md border-gray-300"></textarea>
+    {#if submitted && errors.bio}<p class="mt-1 text-sm text-red-600">
+        {errors.bio}
+      </p>{/if}
   </div>
 
   <div class="grid gap-6 sm:grid-cols-2">

@@ -14,17 +14,12 @@
 
   const genreOptions = Object.entries(GENRE_LABELS) as [Genre, string][];
 
-  // svelte-ignore state_referenced_locally
   let title = $state(movieDetail?.title ?? "");
-  // svelte-ignore state_referenced_locally
   let synopsis = $state(movieDetail?.synopsis ?? "");
-  // svelte-ignore state_referenced_locally
   let releaseYear = $state<number | null>(movieDetail?.releaseYear ?? null);
-  // svelte-ignore state_referenced_locally
   let runtimeMinutes = $state<number | null>(
     movieDetail?.runtimeMinutes ?? null,
   );
-  // svelte-ignore state_referenced_locally
   let genres = $state<Genre[]>(movieDetail?.genres ?? []);
 
   let submitted = $state(false);

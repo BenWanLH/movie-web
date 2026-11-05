@@ -12,7 +12,8 @@
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "test:unit": "vitest",
     "test": "npm run test:unit -- --run",
-    "codegen": "graphql-codegen"
+    "codegen": "graphql-codegen",
+    "test:setup": "playwright install chromium"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^7.4.6",
